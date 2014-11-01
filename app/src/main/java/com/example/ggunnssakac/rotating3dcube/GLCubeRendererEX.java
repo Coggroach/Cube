@@ -3,8 +3,6 @@ package com.example.ggunnssakac.rotating3dcube;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
 import android.os.SystemClock;
-import android.util.Log;
-
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -12,14 +10,15 @@ import javax.microedition.khronos.opengles.GL10;
 /**
  * Created by ggunn on 29/10/14.
  */
-public class GLCubeRendererEX implements GLSurfaceView.Renderer {
-
+public class GLCubeRendererEX implements GLSurfaceView.Renderer
+{
     private GLCube cube;
-    private int X, Y = 0;
+    private int X = 0, Y = 0;
     private float R, G, B, A;
     private int width, height;
 
-    public GLCubeRendererEX() {
+    public GLCubeRendererEX()
+    {
         cube = new GLCube();
         this.R = 0.8F;
         this.G = 0.0F;
@@ -27,12 +26,14 @@ public class GLCubeRendererEX implements GLSurfaceView.Renderer {
         this.A = 1F;
     }
 
-    public void onSurfaceCreated(GL10 gl, EGLConfig eglConfig) {
+    public void onSurfaceCreated(GL10 gl, EGLConfig eglConfig)
+    {
         gl.glClearColor(R, G, B, A);
         gl.glClearDepthf(1f);
     }
 
-    public void onDrawFrame(GL10 gl) {
+    public void onDrawFrame(GL10 gl)
+    {
         gl.glDisable(GL10.GL_DITHER);//?
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
 
@@ -43,15 +44,14 @@ public class GLCubeRendererEX implements GLSurfaceView.Renderer {
         long time = SystemClock.uptimeMillis() % 4000L;
         float angle = 0.090f * ((int) time);
 
-        gl.glRotatef(angle, 1, 1, 1);
-        gl.glTranslatef(0.5f-(float)X/width, 0.5f-(float)Y/height, 1);
-
+        gl.glRotatef(angle, 0, 1, 0);
+        gl.glTranslatef(1.0F - (float)2*X/width, (float)height/width - (float)2*Y/width, 0.0F);
 
         cube.draw(gl);
-
     }
 
-    public void onSurfaceChanged(GL10 gl, int width, int height) {
+    public void onSurfaceChanged(GL10 gl, int width, int height)
+    {
         this.width = width;
         this.height = height;
         gl.glViewport(0, 0, width, height);
@@ -59,14 +59,13 @@ public class GLCubeRendererEX implements GLSurfaceView.Renderer {
         gl.glMatrixMode(GL10.GL_PROJECTION);
         gl.glLoadIdentity();
         gl.glFrustumf(-ratio, ratio, -1, 1, 1, 25);
-
     }
 
-    public void setpointX(int i) {
+    public void setPointX(int i) {
         this.X = i;
     }
 
-    public void setpointY(int i) {
+    public void setPointY(int i) {
         this.Y = i;
     }
 
